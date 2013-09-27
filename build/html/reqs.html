@@ -1,0 +1,211 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Checking required software &mdash; Metagenomics Workshop 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Metagenomics Workshop 0.1 documentation" href="index.html" />
+    <link rel="prev" title="Welcome to the Metagenomics Workshop!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to the Metagenomics Workshop!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Metagenomics Workshop 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="checking-required-software">
+<h1>Checking required software<a class="headerlink" href="#checking-required-software" title="Permalink to this headline">¶</a></h1>
+<p>An often occuring theme in bioinformatics is installing software. Learning how
+to check whether you actually have the required software is the first step.</p>
+<div class="section" id="programs-used-in-this-workshop">
+<h2>Programs used in this workshop<a class="headerlink" href="#programs-used-in-this-workshop" title="Permalink to this headline">¶</a></h2>
+<p>The following programs are used in this workshop:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">xclip</span>
+<span class="n">bowtie2</span>
+<span class="n">bowtie2</span><span class="o">-</span><span class="n">build</span>
+<span class="n">velveth</span>
+<span class="n">velvetg</span>
+<span class="n">parallel</span>
+<span class="n">tablet</span>
+<span class="n">samtools</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-which-to-locate-a-program">
+<h2>Using which to locate a program<a class="headerlink" href="#using-which-to-locate-a-program" title="Permalink to this headline">¶</a></h2>
+<p>An easy way to determine whether you have have a certain program installed is
+by typing:</p>
+<div class="highlight-python"><pre>$ which programname</pre>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">programname</span></tt> is the name of the program you want to use. The program
+<tt class="docutils literal"><span class="pre">which</span></tt> searches all directories for the executable file <tt class="docutils literal"><span class="pre">programname</span></tt> and
+returns the path of the first found hit. This is exactly what happens when you
+would just type <tt class="docutils literal"><span class="pre">programname</span></tt> on the command line, but then <tt class="docutils literal"><span class="pre">programname</span></tt>
+is also executed. Check if you have xclip installed:</p>
+<div class="highlight-python"><pre>$ which xclip
+/usr/bin/xclip</pre>
+</div>
+<p>It doesn&#8217;t matter if the path outputted by which is different for you.</p>
+</div>
+<div class="section" id="check-all-programs-in-one-go-using-xclip-and-which">
+<h2>Check all programs in one go using xclip and which<a class="headerlink" href="#check-all-programs-in-one-go-using-xclip-and-which" title="Permalink to this headline">¶</a></h2>
+<p>To check whether you have all programs installed in one go, you can use
+<tt class="docutils literal"><span class="pre">xclip</span></tt> and <tt class="docutils literal"><span class="pre">which</span></tt>. Make sure you have xclip installed. Then copy the list
+of programs in the top section. Check if you can get the copied text from xclip
+now:</p>
+<div class="highlight-python"><pre>$ xclip -o
+xclip
+bowtie2
+bowtie2-build
+velveth
+velvetg
+parallel
+tablet
+samtools</pre>
+</div>
+<p>Store the output of xclip in a variable and iterate over the programs calling
+<tt class="docutils literal"><span class="pre">which</span></tt> on each of them:</p>
+<div class="highlight-python"><pre>$ req_progs=$(xclip -o)
+$ echo $req_progs
+xclip bowtie2 bowtie2-build velveth velvetg parallel tablet samtools
+$ for p in $req_progs; do which $p || echo $p not in PATH; done
+/usr/bin/xclip
+/home/idb/bin/bowtie2
+/home/idb/bin/bowtie2-build
+/home/idb/downloaded_software/velvet_1.2.03/velveth
+/home/idb/downloaded_software/velvet_1.2.03/velvetg
+/usr/local/bin/parallel
+tablet not in PATH
+/home/idb/bin/samtools</pre>
+</div>
+<p>As you can see all programs are found, except tablet. If any of the installed
+programs is missing, try to install them yourself or ask. If you are having
+troubles following these examples, try to find some bash tutorials online next
+time you have some time to kill. Educating yourself on how to use the command
+line effectively increases your productivity immensely.</p>
+</div>
+<div class="section" id="optional-exercise-check-all-programs-in-one-go-using-xclip-parallel-and-which">
+<h2>(Optional exercise) Check all programs in one go using xclip, parallel and which<a class="headerlink" href="#optional-exercise-check-all-programs-in-one-go-using-xclip-parallel-and-which" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">parallel</span></tt> program can be used to run something over multiple cores in
+parallel. Try to rewrite the following statement, which prints the program name
+twice, such that it prints the same output as in <a class="reference internal" href="#check-all-programs-in-one-go-using-xclip-and-which">Check all programs in one go
+using xclip and which</a>:</p>
+<div class="highlight-python"><pre>$ xclip -o | parallel echo {} '&amp;&amp;' echo {}
+xclip
+xclip
+bowtie2
+bowtie2
+bowtie2-build
+bowtie2-build
+velveth
+velveth
+velvetg
+velvetg
+parallel
+parallel
+tablet
+tablet
+samtools
+samtools</pre>
+</div>
+<p>Of course in this example making the statement execute in parallel is not that
+exciting since the execution time is already extremely short. The execution
+actually becomes slower than the original. This excercise is merely to gain
+familiarity with the parallel syntax.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Checking required software</a><ul>
+<li><a class="reference internal" href="#programs-used-in-this-workshop">Programs used in this workshop</a></li>
+<li><a class="reference internal" href="#using-which-to-locate-a-program">Using which to locate a program</a></li>
+<li><a class="reference internal" href="#check-all-programs-in-one-go-using-xclip-and-which">Check all programs in one go using xclip and which</a></li>
+<li><a class="reference internal" href="#optional-exercise-check-all-programs-in-one-go-using-xclip-parallel-and-which">(Optional exercise) Check all programs in one go using xclip, parallel and which</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to the Metagenomics Workshop!</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/reqs.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to the Metagenomics Workshop!"
+             >previous</a> |</li>
+        <li><a href="index.html">Metagenomics Workshop 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Ino de Bruijn, Marcela Davila, Intawat Nookaew.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
