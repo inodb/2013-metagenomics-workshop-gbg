@@ -25,7 +25,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Metagenomics Workshop 0.1 documentation" href="index.html" /> 
+    <link rel="top" title="Metagenomics Workshop 0.1 documentation" href="index.html" />
+    <link rel="prev" title="Checking required software" href="reqs.html" /> 
   </head>
   <body>
     <div class="related">
@@ -34,6 +35,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="reqs.html" title="Checking required software"
+             accesskey="P">previous</a> |</li>
         <li><a href="index.html">Metagenomics Workshop 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -45,81 +49,49 @@
             
   <div class="section" id="quality-trimming-illumina-paired-end-reads">
 <h1>Quality trimming Illumina paired-end reads<a class="headerlink" href="#quality-trimming-illumina-paired-end-reads" title="Permalink to this headline">¶</a></h1>
+<p>In this excercise you will learn how to quality trim Illumina paired-end reads.
+The most common Next Generation Sequencing (NGS) technology for metagenomics.</p>
 <div class="section" id="sickle">
 <h2>Sickle<a class="headerlink" href="#sickle" title="Permalink to this headline">¶</a></h2>
 <p>For quality trimming Illumina paired end reads we use the library sickle which
 trims reads from 3&#8217; end to 5&#8217; end using a sliding window. If the mean quality
 drops below a specified number remaining part of the read will be trimmed.</p>
 </div>
-<div class="section" id="sickle-on-uppmax">
-<h2>Sickle on Uppmax<a class="headerlink" href="#sickle-on-uppmax" title="Permalink to this headline">¶</a></h2>
-<p>Daniel has already installed sickle in the project dir on uppmax so hurray! The
-absolute path is <tt class="docutils literal"><span class="pre">/proj/b2010008/bin/sickle</span></tt>. <tt class="docutils literal"><span class="pre">/proj/b2010008/bin`</span></tt> to your
-<tt class="docutils literal"><span class="pre">PATH</span></tt> variable if you haven&#8217;t done so already:</p>
-<div class="highlight-python"><pre>export PATH=$PATH:/proj/b2010008/bin</pre>
-</div>
-<p>Note that this sets the variable only for your current shell and all
-subprocesses spawned by it. If you want the directory added to your path for
-always add the command to the file <tt class="docutils literal"><span class="pre">~/.bashrc</span></tt> which is executed everytime bash
-is started.</p>
-</div>
-<div class="section" id="optional-install-sickle-by-yourself">
-<h2>(Optional) Install sickle by yourself<a class="headerlink" href="#optional-install-sickle-by-yourself" title="Permalink to this headline">¶</a></h2>
-<p>Follow these steps only if you want to install sickle by yourself. We are not
-doing this for the workshop today, but I included it just for future reference.
-Installation procedures of research software are often follow the same pattern.
-Download the code, <em>compile</em> it and copy the binary to a location in your
-<tt class="docutils literal"><span class="pre">PATH</span></tt>. The code for sickle is on <a class="reference external" href="https://github.com/najoshi/sickle">https://github.com/najoshi/sickle</a>. I prefer
-<em>compiling</em> my programs in <tt class="docutils literal"><span class="pre">~/src</span></tt> and then copying the resulting program to
-my <tt class="docutils literal"><span class="pre">~/bin</span></tt> directory, which is in my <tt class="docutils literal"><span class="pre">PATH</span></tt>. This should get you a long
-way:</p>
-<div class="highlight-python"><pre>mkdir -p ~/src
-
-# Go to the source directory and clone the sickle repository
-cd ~/src
-git clone https://github.com/najoshi/sickle
-cd sickle
-
-# Compile the program
-make
-
-# Create a bin directory
-mkdir -p ~/bin
-cp sickle ~/bin</pre>
-</div>
-</div>
 <div class="section" id="downloading-a-test-set">
 <h2>Downloading a test set<a class="headerlink" href="#downloading-a-test-set" title="Permalink to this headline">¶</a></h2>
 <p>Today we&#8217;ll be working on a small metagenomic data set from the anterior nares
 (<a class="reference external" href="http://en.wikipedia.org/wiki/Anterior_nares">http://en.wikipedia.org/wiki/Anterior_nares</a>).</p>
 <img alt="_images/nostril.jpg" src="_images/nostril.jpg" />
-<p>So get ready for your first smell of metagenomic assembly - O, yes I did. Run
+<p>So get ready for your first smell of metagenomic assembly - pun intended. Run
 all these commands in your shell:</p>
 <div class="highlight-python"><pre># Download the reads and extract them
-mkdir -p ~/glob/asm-workshop/data
-cd ~/glob/asm-workshop/data
+mkdir -p ~/metagenomics-workshop-gbg/data
+cd ~/metagenomics-workshop-gbg/data
 wget http://downloads.hmpdacc.org/data/Illumina/anterior_nares/SRS018585.tar.bz2
 tar -xjf SRS018585.tar.bz2</pre>
 </div>
-<p>If successfull you should have the files
-<tt class="docutils literal"><span class="pre">~/asm-workshop/data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.1.fastq</span></tt>
-and
-<tt class="docutils literal"><span class="pre">~/asm-workshop/data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.2.fastq</span></tt>.</p>
+<p>If successfull you should have the files:</p>
+<div class="highlight-python"><pre>$ ls -lh ~/metagenomics-workshop-gbg/data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.{1,2}.fastq
+-rw-rw-r-- 1 idb idb 36M Apr 18  2011 /home/idb/metagenomics-workshop-gbg/data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.1.fastq
+-rw-rw-r-- 1 idb idb 36M Apr 18  2011 /home/idb/metagenomics-workshop-gbg/data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.2.fastq</pre>
+</div>
+<p>If not, try to find out if one of the previous commands gave an error.</p>
 </div>
 <div class="section" id="running-sickle-on-a-paired-end-library">
 <h2>Running sickle on a paired end library<a class="headerlink" href="#running-sickle-on-a-paired-end-library" title="Permalink to this headline">¶</a></h2>
 <p>I like to create directories for specific parts I&#8217;m working on and creating
-symbolic links (shortcuts in windows) to the files so there we go:</p>
-<div class="highlight-python"><pre>mkdir -p ~/glob/asm-workshop/sickle
-cd ~/glob/asm-workshop/sickle
+symbolic links (shortcuts in windows) to the input files. One can use the
+command <tt class="docutils literal"><span class="pre">ln</span></tt> for creating links. The difference between a symbolic link and a
+hard link can be found here:
+<a class="reference external" href="http://stackoverflow.com/questions/185899/what-is-the-difference-between-a-symbolic-link-and-a-hard-link">http://stackoverflow.com/questions/185899/what-is-the-difference-between-a-symbolic-link-and-a-hard-link</a>.
+In this case I use symbolic links so I know what path the original reads have,
+which can help one remember what those reads were:</p>
+<div class="highlight-python"><pre>mkdir -p ~/metagenomics-workshop-gbg/sickle
+cd ~/metagenomics-workshop-gbg/sickle
 ln -s ../data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.1.fastq pair1.fastq
 ln -s ../data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.1.fastq pair2.fastq</pre>
 </div>
-<p>The difference between a symbolic link a and a hard link can be found here:
-<a class="reference external" href="http://stackoverflow.com/questions/185899/what-is-the-difference-between-a-symbolic-link-and-a-hard-link">http://stackoverflow.com/questions/185899/what-is-the-difference-between-a-symbolic-link-and-a-hard-link</a>.
-In this case I use symbolic links so I know what path the original reads have,
-which can help one remember what those reads were after an intoxicating night
-out. Now run sickle:</p>
+<p>Now run sickle:</p>
 <div class="highlight-python"><pre># check if sickle is in your PATH
 which sickle
 # Run sickle
@@ -146,14 +118,15 @@ ls</pre>
   <ul>
 <li><a class="reference internal" href="#">Quality trimming Illumina paired-end reads</a><ul>
 <li><a class="reference internal" href="#sickle">Sickle</a></li>
-<li><a class="reference internal" href="#sickle-on-uppmax">Sickle on Uppmax</a></li>
-<li><a class="reference internal" href="#optional-install-sickle-by-yourself">(Optional) Install sickle by yourself</a></li>
 <li><a class="reference internal" href="#downloading-a-test-set">Downloading a test set</a></li>
 <li><a class="reference internal" href="#running-sickle-on-a-paired-end-library">Running sickle on a paired end library</a></li>
 </ul>
 </li>
 </ul>
 
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="reqs.html"
+                        title="previous chapter">Checking required software</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/qtrim.txt"
@@ -182,6 +155,9 @@ ls</pre>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="reqs.html" title="Checking required software"
+             >previous</a> |</li>
         <li><a href="index.html">Metagenomics Workshop 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>

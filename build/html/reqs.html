@@ -26,6 +26,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Metagenomics Workshop 0.1 documentation" href="index.html" />
+    <link rel="next" title="Quality trimming Illumina paired-end reads" href="qtrim.html" />
     <link rel="prev" title="Welcome to the Metagenomics Workshop!" href="index.html" /> 
   </head>
   <body>
@@ -35,6 +36,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="qtrim.html" title="Quality trimming Illumina paired-end reads"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Welcome to the Metagenomics Workshop!"
              accesskey="P">previous</a> |</li>
@@ -49,54 +53,72 @@
             
   <div class="section" id="checking-required-software">
 <h1>Checking required software<a class="headerlink" href="#checking-required-software" title="Permalink to this headline">¶</a></h1>
-<p>An often occuring theme in bioinformatics is installing software. Learning how
-to check whether you actually have the required software is the first step.</p>
+<p>An often occuring theme in bioinformatics is installing software. Here we wil
+go over some steps to help you check whether you actually have the right
+software installed. There&#8217;s an optional excerise on how to install <tt class="docutils literal"><span class="pre">sickle</span></tt>.</p>
 <div class="section" id="programs-used-in-this-workshop">
 <h2>Programs used in this workshop<a class="headerlink" href="#programs-used-in-this-workshop" title="Permalink to this headline">¶</a></h2>
 <p>The following programs are used in this workshop:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">xclip</span>
-<span class="n">bowtie2</span>
-<span class="n">bowtie2</span><span class="o">-</span><span class="n">build</span>
-<span class="n">velveth</span>
-<span class="n">velvetg</span>
-<span class="n">parallel</span>
-<span class="n">tablet</span>
-<span class="n">samtools</span>
-</pre></div>
-</div>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://bowtie-bio.sourceforge.net/bowtie2/index.shtml">Bowtie2</a></li>
+<li><a class="reference external" href="http://www.ebi.ac.uk/~zerbino/velvet/">Velvet</a></li>
+<li><a class="reference external" href="http://sourceforge.net/projects/xclip/">xclip</a></li>
+<li><a class="reference external" href="https://www.gnu.org/software/parallel/">parallel</a></li>
+<li><a class="reference external" href="http://bioinf.scri.ac.uk/tablet/">Tablet</a></li>
+<li><a class="reference external" href="http://samtools.sourceforge.net/">samtools</a></li>
+<li><a class="reference external" href="https://code.google.com/p/cdhit/">CD-HIT</a></li>
+<li><a class="reference external" href="http://sourceforge.net/apps/mediawiki/amos/index.php?title=AMOS">AMOS</a></li>
+<li><a class="reference external" href="https://github.com/najoshi/sickle">sickle</a></li>
+<li><a class="reference external" href="http://picard.sourceforge.net/index.shtml">Picard</a></li>
+</ul>
+</div></blockquote>
 </div>
 <div class="section" id="using-which-to-locate-a-program">
 <h2>Using which to locate a program<a class="headerlink" href="#using-which-to-locate-a-program" title="Permalink to this headline">¶</a></h2>
 <p>An easy way to determine whether you have have a certain program installed is
 by typing:</p>
-<div class="highlight-python"><pre>$ which programname</pre>
+<div class="highlight-python"><pre>which programname</pre>
 </div>
 <p>where <tt class="docutils literal"><span class="pre">programname</span></tt> is the name of the program you want to use. The program
-<tt class="docutils literal"><span class="pre">which</span></tt> searches all directories for the executable file <tt class="docutils literal"><span class="pre">programname</span></tt> and
-returns the path of the first found hit. This is exactly what happens when you
-would just type <tt class="docutils literal"><span class="pre">programname</span></tt> on the command line, but then <tt class="docutils literal"><span class="pre">programname</span></tt>
-is also executed. Check if you have xclip installed:</p>
+<tt class="docutils literal"><span class="pre">which</span></tt> searches all directories in <tt class="docutils literal"><span class="pre">$PATH</span></tt> for the executable file
+<tt class="docutils literal"><span class="pre">programname</span></tt> and returns the path of the first found hit. This is exactly
+what happens when you would just type <tt class="docutils literal"><span class="pre">programname</span></tt> on the command line, but
+then <tt class="docutils literal"><span class="pre">programname</span></tt> is also executed. To see what your <tt class="docutils literal"><span class="pre">$PATH</span></tt> looks like,
+simply <tt class="docutils literal"><span class="pre">echo</span></tt> it:</p>
+<div class="highlight-python"><pre>echo $PATH</pre>
+</div>
+<p>Now check if you have xclip installed:</p>
 <div class="highlight-python"><pre>$ which xclip
 /usr/bin/xclip</pre>
 </div>
-<p>It doesn&#8217;t matter if the path outputted by which is different for you.</p>
+<p>It doesn&#8217;t matter if the path outputted by <tt class="docutils literal"><span class="pre">which</span></tt> is different for you as
+long as you see a location of the program. No output means you don&#8217;t have it in
+your <tt class="docutils literal"><span class="pre">$PATH</span></tt> variable.</p>
 </div>
 <div class="section" id="check-all-programs-in-one-go-using-xclip-and-which">
 <h2>Check all programs in one go using xclip and which<a class="headerlink" href="#check-all-programs-in-one-go-using-xclip-and-which" title="Permalink to this headline">¶</a></h2>
 <p>To check whether you have all programs installed in one go, you can use
-<tt class="docutils literal"><span class="pre">xclip</span></tt> and <tt class="docutils literal"><span class="pre">which</span></tt>. Make sure you have xclip installed. Then copy the list
-of programs in the top section. Check if you can get the copied text from xclip
-now:</p>
-<div class="highlight-python"><pre>$ xclip -o
-xclip
-bowtie2
-bowtie2-build
-velveth
-velvetg
-parallel
-tablet
-samtools</pre>
+<tt class="docutils literal"><span class="pre">xclip</span></tt> and <tt class="docutils literal"><span class="pre">which</span></tt>. Make sure you have xclip installed. Then copy this list
+of programs and scripts that we will be using:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">xclip</span>
+<span class="n">bowtie2</span>
+<span class="n">bowtie2</span><span class="o">-</span><span class="n">build</span>
+<span class="n">velveth</span>
+<span class="n">velvetg</span>
+<span class="n">shuffleSequences_fastq</span><span class="o">.</span><span class="n">pl</span>
+<span class="n">parallel</span>
+<span class="n">tablet</span>
+<span class="n">samtools</span>
+<span class="n">toAmos</span>
+<span class="n">minimus2</span>
+</pre></div>
 </div>
+<p>The command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">xclip</span> <span class="o">-</span><span class="n">o</span>
+</pre></div>
+</div>
+<p>should give you the same list as above.</p>
 <p>Store the output of xclip in a variable and iterate over the programs calling
 <tt class="docutils literal"><span class="pre">which</span></tt> on each of them:</p>
 <div class="highlight-python"><pre>$ req_progs=$(xclip -o)
@@ -112,11 +134,11 @@ $ for p in $req_progs; do which $p || echo $p not in PATH; done
 tablet not in PATH
 /home/idb/bin/samtools</pre>
 </div>
-<p>As you can see all programs are found, except tablet. If any of the installed
-programs is missing, try to install them yourself or ask. If you are having
-troubles following these examples, try to find some bash tutorials online next
-time you have some time to kill. Educating yourself on how to use the command
-line effectively increases your productivity immensely.</p>
+<p>As you can see all programs are found, except tablet in this case. If any of
+the installed programs is missing, try to install them yourself or ask. If you
+are having troubles following these examples, try to find some bash tutorials
+online next time you have some time to kill. Educating yourself on how to use
+the command line effectively increases your productivity immensely.</p>
 </div>
 <div class="section" id="optional-exercise-check-all-programs-in-one-go-using-xclip-parallel-and-which">
 <h2>(Optional exercise) Check all programs in one go using xclip, parallel and which<a class="headerlink" href="#optional-exercise-check-all-programs-in-one-go-using-xclip-parallel-and-which" title="Permalink to this headline">¶</a></h2>
@@ -147,6 +169,30 @@ exciting since the execution time is already extremely short. The execution
 actually becomes slower than the original. This excercise is merely to gain
 familiarity with the parallel syntax.</p>
 </div>
+<div class="section" id="optional-excercise-install-sickle-by-yourself">
+<h2>(Optional excercise) Install sickle by yourself<a class="headerlink" href="#optional-excercise-install-sickle-by-yourself" title="Permalink to this headline">¶</a></h2>
+<p>Follow these steps only if you want to install <tt class="docutils literal"><span class="pre">sickle</span></tt> by yourself.
+Installation procedures of research software often follow the same pattern.
+Download the code, <em>compile</em> it and copy the binary to a location in your
+<tt class="docutils literal"><span class="pre">$PATH</span></tt>. The code for sickle is on <a class="reference external" href="https://github.com/najoshi/sickle">https://github.com/najoshi/sickle</a>. I
+prefer <em>compiling</em> my programs in <tt class="docutils literal"><span class="pre">~/src</span></tt> and then copying the resulting
+program to my <tt class="docutils literal"><span class="pre">~/bin</span></tt> directory, which is in my <tt class="docutils literal"><span class="pre">$PATH</span></tt>. This should get
+you a long way:</p>
+<div class="highlight-python"><pre>mkdir -p ~/src
+
+# Go to the source directory and clone the sickle repository
+cd ~/src
+git clone https://github.com/najoshi/sickle
+cd sickle
+
+# Compile the program
+make
+
+# Create a bin directory
+mkdir -p ~/bin
+cp sickle ~/bin</pre>
+</div>
+</div>
 </div>
 
 
@@ -162,6 +208,7 @@ familiarity with the parallel syntax.</p>
 <li><a class="reference internal" href="#using-which-to-locate-a-program">Using which to locate a program</a></li>
 <li><a class="reference internal" href="#check-all-programs-in-one-go-using-xclip-and-which">Check all programs in one go using xclip and which</a></li>
 <li><a class="reference internal" href="#optional-exercise-check-all-programs-in-one-go-using-xclip-parallel-and-which">(Optional exercise) Check all programs in one go using xclip, parallel and which</a></li>
+<li><a class="reference internal" href="#optional-excercise-install-sickle-by-yourself">(Optional excercise) Install sickle by yourself</a></li>
 </ul>
 </li>
 </ul>
@@ -169,6 +216,9 @@ familiarity with the parallel syntax.</p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
                         title="previous chapter">Welcome to the Metagenomics Workshop!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="qtrim.html"
+                        title="next chapter">Quality trimming Illumina paired-end reads</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/reqs.txt"
@@ -197,6 +247,9 @@ familiarity with the parallel syntax.</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="qtrim.html" title="Quality trimming Illumina paired-end reads"
+             >next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Welcome to the Metagenomics Workshop!"
              >previous</a> |</li>
