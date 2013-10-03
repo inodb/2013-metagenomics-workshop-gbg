@@ -96,3 +96,4 @@ optimization function you give it. Use VelvetOptimiser to find the assembly
 that gets the best score for the optimization function you designed in `assemstats`_.
 
 .. _VelvetOptimiser: https://github.com/Victorian-Bioinformatics-Consortium/VelvetOptimiser
+
