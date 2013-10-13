@@ -23,3 +23,5 @@ otherwise it will be very difficult to follow some of the examples. Have fun!
     reqs
     qtrim
     velvet
+    bowtie2
+    qiime

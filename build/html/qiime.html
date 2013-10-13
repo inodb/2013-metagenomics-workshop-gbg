@@ -1,0 +1,238 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Quantitative Insights Into Microbial Ecology (QIIME) Practical &mdash; Metagenomics Workshop 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Metagenomics Workshop 0.1 documentation" href="index.html" />
+    <link rel="prev" title="Assembling reads with Velvet" href="velvet.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="velvet.html" title="Assembling reads with Velvet"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Metagenomics Workshop 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="quantitative-insights-into-microbial-ecology-qiime-practical">
+<h1>Quantitative Insights Into Microbial Ecology (QIIME) Practical<a class="headerlink" href="#quantitative-insights-into-microbial-ecology-qiime-practical" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="the-data">
+<h2>The Data<a class="headerlink" href="#the-data" title="Permalink to this headline">¶</a></h2>
+<p>A research group has performed a 16S rRNA amplification protocol to some
+sediment samples, which were sequenced on an Illumina machine. Here we will see
+which species of bacteria are present in the sediments by using some steps of
+the Qiime pipeline.</p>
+<p>During the exercise we will refer to this tutorial
+<a class="reference external" href="http://qiime.org/tutorials/tutorial.html">http://qiime.org/tutorials/tutorial.html</a>, so you can read in more detail the
+steps and parameters followed here.</p>
+<p>Log in to <tt class="docutils literal"><span class="pre">genomics7.sa.gu.se</span></tt>. In your home directory you will find:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">seqs.fa</span></tt></dt>
+<dd>sequencing reads, already demultiplexed and formatted for processing
+<a class="reference external" href="http://qiime.org/tutorials/tutorial.html#assign-samples-to-multiplex-reads">http://qiime.org/tutorials/tutorial.html#assign-samples-to-multiplex-reads</a></dd>
+<dt><tt class="docutils literal"><span class="pre">Map.txt</span></tt></dt>
+<dd>sample description
+<a class="reference external" href="http://qiime.org/tutorials/tutorial.html#mapping-file-tab-delimited-txt">http://qiime.org/tutorials/tutorial.html#mapping-file-tab-delimited-txt</a></dd>
+<dt><tt class="docutils literal"><span class="pre">qiime.sh</span></tt></dt>
+<dd>batch script that runs some steps for de novo OUT picking and diversity
+analyses</dd>
+</dl>
+<p>Under the Files folder you will find reference files used by Qiime for the
+analysis of your reads. As you progress in the exercise, remember to check what
+are these files used for:</p>
+<div class="highlight-python"><pre>97_otus.fasta
+97_otu_taxonomy.txt
+core_set_aligned.fasta.imputed
+gg_97_otus_4feb2011_aligned.fasta
+greengenes_tax_rdp_train.txt
+lanemask_in_1s_and_0s</pre>
+</div>
+</div>
+<div class="section" id="submitting-your-job">
+<h2>Submitting your job<a class="headerlink" href="#submitting-your-job" title="Permalink to this headline">¶</a></h2>
+<p>Due to technical reasons you will run the provided batch script, and while it
+is running you will inspect the produced files to assess the taxonomic profiles
+and comparisons of the samples.</p>
+<p>Open the script with a text editor and modify the following lines:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#SBATCH --mail-user=yourmail</span>
+<span class="c">#SBATCH -J guestXX</span>
+</pre></div>
+</div>
+<p>Use the following commands to submit and monitor your analysis:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">sbatch</span> <span class="pre">&lt;batch.sh&gt;</span></tt></dt>
+<dd>Submit a batch script to SLURM</dd>
+<dt><tt class="docutils literal"><span class="pre">scancel</span> <span class="pre">&lt;jobID&gt;</span></tt></dt>
+<dd>Cancel a batch script</dd>
+<dt><tt class="docutils literal"><span class="pre">squeue</span></tt></dt>
+<dd>View information about jobs located in the SLURM scheduling queue</dd>
+</dl>
+<p>Once running, you can check the <tt class="docutils literal"><span class="pre">slurm-jobID.out</span></tt> file to monitor the
+progress of your job, since all standard output will be printed to this file.</p>
+</div>
+<div class="section" id="installing-required-software">
+<h2>Installing required software<a class="headerlink" href="#installing-required-software" title="Permalink to this headline">¶</a></h2>
+<p>To inspect the different results, you need to install the following software in
+your computer, not in the server!:</p>
+<dl class="docutils">
+<dt>KiNG</dt>
+<dd>an interactive system for three-dimensional vector graphics)
+<a class="reference external" href="http://kinemage.biochem.duke.edu/software/king.php">http://kinemage.biochem.duke.edu/software/king.php</a></dd>
+<dt>FigTree</dt>
+<dd>a graphical viewer of phylogenetic trees
+<a class="reference external" href="http://tree.bio.ed.ac.uk/software/figtree/">http://tree.bio.ed.ac.uk/software/figtree/</a></dd>
+</dl>
+</div>
+<div class="section" id="picking-operational-taxonomic-units">
+<h2>Picking operational taxonomic units<a class="headerlink" href="#picking-operational-taxonomic-units" title="Permalink to this headline">¶</a></h2>
+<p>Go to
+<a class="reference external" href="http://qiime.org/tutorials/tutorial.html#picking-operational-taxonomic-units-otus-through-making-otu-table">http://qiime.org/tutorials/tutorial.html#picking-operational-taxonomic-units-otus-through-making-otu-table</a>.
+Read through and inspect the files created in this section. To look at the
+phylogenetic tree, copy the <tt class="docutils literal"><span class="pre">OTUS</span></tt> directory to your computer and use FigTree
+to open <tt class="docutils literal"><span class="pre">rep_set.tree</span></tt></p>
+</div>
+<div class="section" id="viewing-statistics">
+<h2>Viewing statistics<a class="headerlink" href="#viewing-statistics" title="Permalink to this headline">¶</a></h2>
+<p>Go to <a class="reference external" href="http://qiime.org/tutorials/tutorial.html#view-statistics-of-the-otu-table">http://qiime.org/tutorials/tutorial.html#view-statistics-of-the-otu-table</a></p>
+<p>Are the reads from all the samples evenly distributed? Should they be?</p>
+</div>
+<div class="section" id="out-heatmap">
+<h2>Out heatmap<a class="headerlink" href="#out-heatmap" title="Permalink to this headline">¶</a></h2>
+<p>Go to <a class="reference external" href="http://qiime.org/tutorials/tutorial.html#make-otu-heatmap">http://qiime.org/tutorials/tutorial.html#make-otu-heatmap</a>. Copy the
+<tt class="docutils literal"><span class="pre">OTUS/OTU_heatmap/</span></tt> to your computer and open <tt class="docutils literal"><span class="pre">otu_table.html</span></tt> in a web
+browser.</p>
+<p>What can you conclude from these results?</p>
+</div>
+<div class="section" id="taxonomic-composition">
+<h2>Taxonomic composition<a class="headerlink" href="#taxonomic-composition" title="Permalink to this headline">¶</a></h2>
+<p>Go to
+<a class="reference external" href="http://qiime.org/tutorials/tutorial.html#summarize-communities-by-taxonomic-composition">http://qiime.org/tutorials/tutorial.html#summarize-communities-by-taxonomic-composition</a>.
+Copy <tt class="docutils literal"><span class="pre">wf_taxa_summary/</span></tt> and compare <tt class="docutils literal"><span class="pre">area_charts.html</span></tt> and
+<tt class="docutils literal"><span class="pre">bars_charts.html</span></tt>.</p>
+<p>Is the distribution of organisms similar/different among samples?</p>
+</div>
+<div class="section" id="alpha-diversity-and-rarefaction-curves">
+<h2>Alpha diversity and rarefaction curves<a class="headerlink" href="#alpha-diversity-and-rarefaction-curves" title="Permalink to this headline">¶</a></h2>
+<p>Go to
+<a class="reference external" href="http://qiime.org/tutorials/tutorial.html#compute-alpha-diversity-within-the-samples-and-generate-rarefaction-curves">http://qiime.org/tutorials/tutorial.html#compute-alpha-diversity-within-the-samples-and-generate-rarefaction-curves</a>
+. Copy <tt class="docutils literal"><span class="pre">wf_arare/</span></tt> and open <tt class="docutils literal"><span class="pre">rarefaction_plots.html</span></tt>. Inspect the observed_species
+metric vs depth, dissolved_oxigen and temperature.</p>
+<p>What are your conclusions ?</p>
+</div>
+<div class="section" id="beta-diversity">
+<h2>Beta diversity<a class="headerlink" href="#beta-diversity" title="Permalink to this headline">¶</a></h2>
+<p>Go to
+<a class="reference external" href="http://qiime.org/tutorials/tutorial.html#compute-beta-diversity-and-generate-beta-diversity-plots">http://qiime.org/tutorials/tutorial.html#compute-beta-diversity-and-generate-beta-diversity-plots</a>.
+Copy <tt class="docutils literal"><span class="pre">wf_bdiv/</span></tt> and inspect the PCoA plots from the weighted and unweighted
+comparisons. You can either look at the 2D (web browser) or 3D PCoA plots
+(using KiNG).</p>
+<p>Are there any differences between the clustering of weighted and unweighted versions?</p>
+</div>
+<div class="section" id="estimating-the-precision-of-sample-statistics-and-hierarchical-clustering">
+<h2>Estimating the precision of sample statistics and hierarchical clustering<a class="headerlink" href="#estimating-the-precision-of-sample-statistics-and-hierarchical-clustering" title="Permalink to this headline">¶</a></h2>
+<p>Go to <a class="reference external" href="http://qiime.org/tutorials/tutorial.html#jackknifed-beta-diversity-and-hierarchical-clustering">http://qiime.org/tutorials/tutorial.html#jackknifed-beta-diversity-and-hierarchical-clustering</a>. Copy <tt class="docutils literal"><span class="pre">wf_jack/</span></tt>.</p>
+<p>Which version, weighted or unweighted, shows more support in their internal
+nodes?  Which is the more reliable clustering? Look at the pdf files
+(<tt class="docutils literal"><span class="pre">jackknife_named_nodes.pdf</span></tt>)</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Quantitative Insights Into Microbial Ecology (QIIME) Practical</a><ul>
+<li><a class="reference internal" href="#the-data">The Data</a></li>
+<li><a class="reference internal" href="#submitting-your-job">Submitting your job</a></li>
+<li><a class="reference internal" href="#installing-required-software">Installing required software</a></li>
+<li><a class="reference internal" href="#picking-operational-taxonomic-units">Picking operational taxonomic units</a></li>
+<li><a class="reference internal" href="#viewing-statistics">Viewing statistics</a></li>
+<li><a class="reference internal" href="#out-heatmap">Out heatmap</a></li>
+<li><a class="reference internal" href="#taxonomic-composition">Taxonomic composition</a></li>
+<li><a class="reference internal" href="#alpha-diversity-and-rarefaction-curves">Alpha diversity and rarefaction curves</a></li>
+<li><a class="reference internal" href="#beta-diversity">Beta diversity</a></li>
+<li><a class="reference internal" href="#estimating-the-precision-of-sample-statistics-and-hierarchical-clustering">Estimating the precision of sample statistics and hierarchical clustering</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="velvet.html"
+                        title="previous chapter">Assembling reads with Velvet</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/qiime.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="velvet.html" title="Assembling reads with Velvet"
+             >previous</a> |</li>
+        <li><a href="index.html">Metagenomics Workshop 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Ino de Bruijn, Marcela Davila, Intawat Nookaew.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
