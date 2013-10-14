@@ -13,7 +13,9 @@ During the exercise we will refer to this tutorial
 http://qiime.org/tutorials/tutorial.html, so you can read in more detail the
 steps and parameters followed here.
 
-Log in to ``genomics7.sa.gu.se``. In your home directory you will find:
+Unfortunately you will not be running the different steps, however we provide you with all the command lines used in this pracical (qiime.sh)
+
+You will find the data at ``rudy``. The raw data:
 
 ``seqs.fa``
     sequencing reads, already demultiplexed and formatted for processing
@@ -38,30 +40,6 @@ are these files used for::
     greengenes_tax_rdp_train.txt  
     lanemask_in_1s_and_0s
 
-Submitting your job
-===================
-
-Due to technical reasons you will run the provided batch script, and while it
-is running you will inspect the produced files to assess the taxonomic profiles
-and comparisons of the samples. 
-
-Open the script with a text editor and modify the following lines::
-
-    #SBATCH --mail-user=yourmail
-    #SBATCH -J guestXX
-
-Use the following commands to submit and monitor your analysis:
-
-``sbatch <batch.sh>``
-    Submit a batch script to SLURM
-``scancel <jobID>``
-    Cancel a batch script
-``squeue``
-    View information about jobs located in the SLURM scheduling queue
-
-Once running, you can check the ``slurm-jobID.out`` file to monitor the
-progress of your job, since all standard output will be printed to this file.
-
 Installing required software
 ============================
 
@@ -81,8 +59,8 @@ Picking operational taxonomic units
 
 Go to
 http://qiime.org/tutorials/tutorial.html#picking-operational-taxonomic-units-otus-through-making-otu-table.
-Read through and inspect the files created in this section. To look at the
-phylogenetic tree, copy the ``OTUS`` directory to your computer and use FigTree
+Read through and inspect the files created in this section under ``OTUS/``. To look at the
+phylogenetic tree, use FigTree
 to open ``rep_set.tree``
 
 Viewing statistics
@@ -95,8 +73,8 @@ Are the reads from all the samples evenly distributed? Should they be?
 Out heatmap
 ===========
 
-Go to http://qiime.org/tutorials/tutorial.html#make-otu-heatmap. Copy the
-``OTUS/OTU_heatmap/`` to your computer and open ``otu_table.html`` in a web
+Go to http://qiime.org/tutorials/tutorial.html#make-otu-heatmap. Open ``otu_table.html`` from 
+``OTUS/OTU_heatmap/`` in a web
 browser.
 
 What can you conclude from these results?
@@ -106,8 +84,8 @@ Taxonomic composition
 
 Go to
 http://qiime.org/tutorials/tutorial.html#summarize-communities-by-taxonomic-composition.
-Copy ``wf_taxa_summary/`` and compare ``area_charts.html`` and
-``bars_charts.html``. 
+Compare ``area_charts.html`` and
+``bars_charts.html`` from ``wf_taxa_summary/``  
 
 Is the distribution of organisms similar/different among samples?
 
@@ -116,18 +94,18 @@ Alpha diversity and rarefaction curves
 
 Go to
 http://qiime.org/tutorials/tutorial.html#compute-alpha-diversity-within-the-samples-and-generate-rarefaction-curves
-. Copy ``wf_arare/`` and open ``rarefaction_plots.html``. Inspect the observed_species
+. Open ``rarefaction_plots.html`` from ``wf_arare/`` and inspect the observed_species
 metric vs depth, dissolved_oxigen and temperature. 
 
-What are your conclusions ? 
+What are your conclusions? 
 
 Beta diversity
 ==============
 
 Go to
 http://qiime.org/tutorials/tutorial.html#compute-beta-diversity-and-generate-beta-diversity-plots.
-Copy ``wf_bdiv/`` and inspect the PCoA plots from the weighted and unweighted
-comparisons. You can either look at the 2D (web browser) or 3D PCoA plots
+Inspect the PCoA plots from the weighted and unweighted
+comparisons from ``wf_bdiv/``. You can either look at the 2D (web browser) or 3D PCoA plots
 (using KiNG). 
 
 Are there any differences between the clustering of weighted and unweighted versions?
@@ -135,7 +113,7 @@ Are there any differences between the clustering of weighted and unweighted vers
 Estimating the precision of sample statistics and hierarchical clustering
 ==========================================================================
 
-Go to http://qiime.org/tutorials/tutorial.html#jackknifed-beta-diversity-and-hierarchical-clustering. Copy ``wf_jack/``. 
+Go to http://qiime.org/tutorials/tutorial.html#jackknifed-beta-diversity-and-hierarchical-clustering. Look under ``wf_jack/``. 
 
 Which version, weighted or unweighted, shows more support in their internal
 nodes?  Which is the more reliable clustering? Look at the pdf files
