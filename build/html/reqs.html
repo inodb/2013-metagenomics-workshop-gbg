@@ -65,7 +65,6 @@ software installed. There&#8217;s an optional excerise on how to install <tt cla
 <li><a class="reference external" href="http://www.ebi.ac.uk/~zerbino/velvet/">Velvet</a></li>
 <li><a class="reference external" href="http://sourceforge.net/projects/xclip/">xclip</a></li>
 <li><a class="reference external" href="https://www.gnu.org/software/parallel/">parallel</a></li>
-<li><a class="reference external" href="http://bioinf.scri.ac.uk/tablet/">Tablet</a></li>
 <li><a class="reference external" href="http://samtools.sourceforge.net/">samtools</a></li>
 <li><a class="reference external" href="https://code.google.com/p/cdhit/">CD-HIT</a></li>
 <li><a class="reference external" href="http://sourceforge.net/apps/mediawiki/amos/index.php?title=AMOS">AMOS</a></li>
@@ -73,6 +72,18 @@ software installed. There&#8217;s an optional excerise on how to install <tt cla
 <li><a class="reference external" href="http://picard.sourceforge.net/index.shtml">Picard</a></li>
 </ul>
 </div></blockquote>
+<p>All programs are already installed, all you have to do is load the virtual
+environment for this workshop. Once you are logged in to the server run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">source</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">teacher8</span><span class="o">/</span><span class="n">virt_env</span><span class="o">/</span><span class="n">mg</span><span class="o">-</span><span class="n">workshop</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+</pre></div>
+</div>
+<p>You deactivate the virtual environment with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">deactivate</span>
+</pre></div>
+</div>
+<p>NOTE: This is a python virtual environment. The binary folder of the virtual
+environment has symbolic links to all programs used in this workshop so you
+should be able to run those without problems.</p>
 </div>
 <div class="section" id="using-which-to-locate-a-program">
 <h2>Using which to locate a program<a class="headerlink" href="#using-which-to-locate-a-program" title="Permalink to this headline">¶</a></h2>
@@ -108,7 +119,6 @@ of programs and scripts that we will be using:</p>
 <span class="n">velvetg</span>
 <span class="n">shuffleSequences_fastq</span><span class="o">.</span><span class="n">pl</span>
 <span class="n">parallel</span>
-<span class="n">tablet</span>
 <span class="n">samtools</span>
 <span class="n">toAmos</span>
 <span class="n">minimus2</span>
@@ -123,7 +133,7 @@ of programs and scripts that we will be using:</p>
 <tt class="docutils literal"><span class="pre">which</span></tt> on each of them:</p>
 <div class="highlight-python"><pre>$ req_progs=$(xclip -o)
 $ echo $req_progs
-xclip bowtie2 bowtie2-build velveth velvetg parallel tablet samtools
+xclip bowtie2 bowtie2-build velveth velvetg parallel samtools
 $ for p in $req_progs; do which $p || echo $p not in PATH; done
 /usr/bin/xclip
 /home/idb/bin/bowtie2
@@ -131,7 +141,6 @@ $ for p in $req_progs; do which $p || echo $p not in PATH; done
 /home/idb/downloaded_software/velvet_1.2.03/velveth
 /home/idb/downloaded_software/velvet_1.2.03/velvetg
 /usr/local/bin/parallel
-tablet not in PATH
 /home/idb/bin/samtools</pre>
 </div>
 <p>As you can see all programs are found, except tablet in this case. If any of
@@ -159,8 +168,6 @@ velvetg
 velvetg
 parallel
 parallel
-tablet
-tablet
 samtools
 samtools</pre>
 </div>

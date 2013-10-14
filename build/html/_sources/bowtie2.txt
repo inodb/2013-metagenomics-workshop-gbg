@@ -73,7 +73,8 @@ Look at the output from BEDTools::
 ===========================================
 Lastly one can look at the BAM file in tablet. For this exercise you should
 install Tablet yourself locally and download the bam file. The installation is
-pretty straightforward, you download it from http://bioinf.scri.ac.uk/tablet/.
+pretty straightforward, you download Tablet from
+http://bioinf.scri.ac.uk/tablet/.
 
 
 .. _doc: https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dDJwcG1jbk1kTTY3eGZNazJGMUhfM3c#gid=3.

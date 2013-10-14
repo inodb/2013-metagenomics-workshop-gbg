@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Metagenomics Workshop 0.1 documentation" href="index.html" />
-    <link rel="next" title="Quantitative Insights Into Microbial Ecology Practical" href="qiime.html" />
+    <link rel="next" title="Mapping reads back to the assembly" href="bowtie2.html" />
     <link rel="prev" title="Quality trimming Illumina paired-end reads" href="qtrim.html" /> 
   </head>
   <body>
@@ -37,7 +37,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="qiime.html" title="Quantitative Insights Into Microbial Ecology Practical"
+          <a href="bowtie2.html" title="Mapping reads back to the assembly"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="qtrim.html" title="Quality trimming Illumina paired-end reads"
@@ -128,6 +128,21 @@ length distribution where you express the optimization function in terms of the
 column names from the <a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dDJwcG1jbk1kTTY3eGZNazJGMUhfM3c#gid=3.">doc</a>. For instance only <tt class="docutils literal"><span class="pre">n50_len</span></tt> or <tt class="docutils literal"><span class="pre">sum</span> <span class="pre">*</span>
 <span class="pre">n50_len</span></tt>.</p>
 </div>
+<div class="section" id="optional-exercise-ray">
+<h2>(Optional exercise) Ray<a class="headerlink" href="#optional-exercise-ray" title="Permalink to this headline">¶</a></h2>
+<p>Try to create an assembly with Ray over the same kmer. Ray is an assembler that
+uses MPI to distribute the assembly over multiple cores and nodes. The latest
+version of Ray was made to work well with metagenomics data as well:</p>
+<div class="highlight-python"><pre>module load openmpi-x86_64
+mkdir -p ~/metagenomics-workshop-gbg/ray
+cd ~/metagenomics-workshop-gbg/ray
+ln -s ../sickle/qtrim1.fastq pair1.fastq
+ln -s ../sickle/qtrim2.fastq pair2.fastq
+mpiexec -n1 Ray -k 21 -p pair1.fastq pair2.fastq -o out_21</pre>
+</div>
+<p>Add the <tt class="docutils literal"><span class="pre">assemstats</span></tt> results to the <a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dDJwcG1jbk1kTTY3eGZNazJGMUhfM3c#gid=3.">doc</a> as you did for Velvet. There is a
+separate tab for the Ray assemblies, compare the results with Velvet.</p>
+</div>
 <div class="section" id="optional-exercise-velvetoptimiser">
 <h2>(Optional exercise) VelvetOptimiser<a class="headerlink" href="#optional-exercise-velvetoptimiser" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://github.com/Victorian-Bioinformatics-Consortium/VelvetOptimiser">VelvetOptimiser</a> is a script that runs Velvet multiple times and follows the
@@ -149,6 +164,7 @@ that gets the best score for the optimization function you designed in <a class=
 <li><a class="reference internal" href="#velveth">velveth</a></li>
 <li><a class="reference internal" href="#velvetg">velvetg</a></li>
 <li><a class="reference internal" href="#assemstats">assemstats</a></li>
+<li><a class="reference internal" href="#optional-exercise-ray">(Optional exercise) Ray</a></li>
 <li><a class="reference internal" href="#optional-exercise-velvetoptimiser">(Optional exercise) VelvetOptimiser</a></li>
 </ul>
 </li>
@@ -158,8 +174,8 @@ that gets the best score for the optimization function you designed in <a class=
   <p class="topless"><a href="qtrim.html"
                         title="previous chapter">Quality trimming Illumina paired-end reads</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="qiime.html"
-                        title="next chapter">Quantitative Insights Into Microbial Ecology Practical</a></p>
+  <p class="topless"><a href="bowtie2.html"
+                        title="next chapter">Mapping reads back to the assembly</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/velvet.txt"
@@ -189,7 +205,7 @@ that gets the best score for the optimization function you designed in <a class=
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="qiime.html" title="Quantitative Insights Into Microbial Ecology Practical"
+          <a href="bowtie2.html" title="Mapping reads back to the assembly"
              >next</a> |</li>
         <li class="right" >
           <a href="qtrim.html" title="Quality trimming Illumina paired-end reads"

@@ -13,7 +13,6 @@ The following programs are used in this workshop:
     - Velvet_
     - xclip_
     - parallel_
-    - Tablet_
     - samtools_
     - CD-HIT_
     - AMOS_
@@ -24,12 +23,24 @@ The following programs are used in this workshop:
 .. _Velvet: http://www.ebi.ac.uk/~zerbino/velvet/
 .. _xclip: http://sourceforge.net/projects/xclip/
 .. _parallel: https://www.gnu.org/software/parallel/
-.. _Tablet: http://bioinf.scri.ac.uk/tablet/
 .. _samtools: http://samtools.sourceforge.net/
 .. _CD-HIT: https://code.google.com/p/cdhit/
 .. _AMOS: http://sourceforge.net/apps/mediawiki/amos/index.php?title=AMOS
 .. _sickle: https://github.com/najoshi/sickle
 .. _Picard: http://picard.sourceforge.net/index.shtml
+
+All programs are already installed, all you have to do is load the virtual
+environment for this workshop. Once you are logged in to the server run::
+
+    source /home/teacher8/virt_env/mg-workshop/bin/activate
+
+You deactivate the virtual environment with::
+    
+    deactivate
+
+NOTE: This is a python virtual environment. The binary folder of the virtual
+environment has symbolic links to all programs used in this workshop so you
+should be able to run those without problems.
 
 
 Using which to locate a program
@@ -70,7 +81,6 @@ of programs and scripts that we will be using::
     velvetg
     shuffleSequences_fastq.pl
     parallel
-    tablet
     samtools
     toAmos
     minimus2
@@ -86,7 +96,7 @@ Store the output of xclip in a variable and iterate over the programs calling
 
     $ req_progs=$(xclip -o)
     $ echo $req_progs
-    xclip bowtie2 bowtie2-build velveth velvetg parallel tablet samtools
+    xclip bowtie2 bowtie2-build velveth velvetg parallel samtools
     $ for p in $req_progs; do which $p || echo $p not in PATH; done
     /usr/bin/xclip
     /home/idb/bin/bowtie2
@@ -94,7 +104,6 @@ Store the output of xclip in a variable and iterate over the programs calling
     /home/idb/downloaded_software/velvet_1.2.03/velveth
     /home/idb/downloaded_software/velvet_1.2.03/velvetg
     /usr/local/bin/parallel
-    tablet not in PATH
     /home/idb/bin/samtools
 
 As you can see all programs are found, except tablet in this case. If any of
@@ -123,8 +132,6 @@ using xclip and which`_::
     velvetg
     parallel
     parallel
-    tablet
-    tablet
     samtools
     samtools
 

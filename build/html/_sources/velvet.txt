@@ -89,6 +89,22 @@ column names from the doc_. For instance only ``n50_len`` or ``sum *
 n50_len``.
 
 
+(Optional exercise) Ray
+=======================
+Try to create an assembly with Ray over the same kmer. Ray is an assembler that
+uses MPI to distribute the assembly over multiple cores and nodes. The latest
+version of Ray was made to work well with metagenomics data as well::
+
+    module load openmpi-x86_64
+    mkdir -p ~/metagenomics-workshop-gbg/ray
+    cd ~/metagenomics-workshop-gbg/ray
+    ln -s ../sickle/qtrim1.fastq pair1.fastq
+    ln -s ../sickle/qtrim2.fastq pair2.fastq
+    mpiexec -n1 Ray -k 21 -p pair1.fastq pair2.fastq -o out_21
+
+Add the ``assemstats`` results to the doc_ as you did for Velvet. There is a
+separate tab for the Ray assemblies, compare the results with Velvet.
+
 (Optional exercise) VelvetOptimiser
 ===================================
 VelvetOptimiser_ is a script that runs Velvet multiple times and follows the
