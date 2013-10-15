@@ -5,7 +5,7 @@ Quantitative Insights Into Microbial Ecology (QIIME) Practical
 The Data
 ========
 A research group has performed a 16S rRNA amplification protocol to some
-sediment samples, which were sequenced on an Illumina machine. Here we will see
+sediment samples, which were sequenced on an Illumina machine in one single lane. Here we will see
 which species of bacteria are present in the sediments by using some steps of
 the Qiime pipeline. 
 
@@ -59,18 +59,19 @@ Picking operational taxonomic units
 
 Go to
 http://qiime.org/tutorials/tutorial.html#picking-operational-taxonomic-units-otus-through-making-otu-table.
-Read through and inspect the files created in this section under ``OTUS/``. To look at the
+Read through and inspect the files created in this section under ``OTUS/``. Look at the
 phylogenetic tree, use FigTree
 to open ``rep_set.tree``
 
 Viewing statistics
 ==================
 
-Go to http://qiime.org/tutorials/tutorial.html#view-statistics-of-the-otu-table
+Go to http://qiime.org/tutorials/tutorial.html#view-statistics-of-the-otu-table. Look at the per_library_stats.txt 
+under ``Files/``
 
 Are the reads from all the samples evenly distributed? Should they be?
 
-Out heatmap
+OTU heatmap
 ===========
 
 Go to http://qiime.org/tutorials/tutorial.html#make-otu-heatmap. Open ``otu_table.html`` from 
